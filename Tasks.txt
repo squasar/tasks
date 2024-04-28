@@ -1,0 +1,226 @@
+TASK 1
+
+CSS:
+#div2 {
+  border: 1px solid #000;
+  padding: 10px;
+  margin-top: 10px;
+  width: 110px;
+  min-height: 1px;         
+  background-color: #fff;
+  color: #000;
+  text-color: red;
+}
+
+#myButton {
+  margin-top: 10px;
+  width: 70px;
+  background-color: #fff;
+  color: #000;
+}
+
+
+
+
+
+JS:
+var div1 = document.getElementById('div1').textContent;
+var nums = Array.from(div1);
+var div2 = document.getElementById('div2');
+var delay_plus_odd = 4000;
+var delay_plus_even = 1000;
+
+function addToDiv2() {
+  div2.innerHTML = '';
+
+  nums.forEach((num, index) => {
+    var delay;
+    if (index % 2 === 1) {
+      delay = delay_plus_odd + (index * delay_plus_even);
+    } else if (index === 0) {
+      delay = delay_plus_even;
+    } else {
+      delay = delay_plus_odd + ((index - 1) * delay_plus_even) + delay_plus_even;
+    }
+
+    setTimeout(() => {
+      var span = document.createElement('span');
+      span.textContent = num + ' ';
+      div2.appendChild(span);
+    }, delay);
+  });
+}
+
+var button = document.getElementById('myButton');
+button.addEventListener('click', addToDiv2);
+
+
+TASK 2
+
+HTML:
+<html>
+	<body>
+		<div class="main">Welcome To ARPM!</div>
+    <div class="circle"></div>
+	</body>
+</html>
+
+CSS:
+.main {
+  font-size: 48px;
+  text-align: center;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  height: 100vh;
+  position:relative;
+  background-color:black;
+  color:white !important;
+}
+
+.circle {
+    margin-left:40%;
+    width: 60px;
+    height: 60px;
+    top: 50%;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 70px;
+    position: absolute;
+    margin-top: 10px;
+    animation: move 2s infinite alternate;
+    z-index:2;
+  }
+
+  @keyframes move {
+  from {
+    left: 0;
+    transform: translate(0, -50%);
+    
+  }
+  to {
+    left: 20%;
+    transform: translate(-100%, -50%);
+  }
+}
+
+
+
+
+
+
+
+TASK 3:
+
+
+<div class="container">
+  <div class="row">
+    <div class="row justify-content-center col">
+      <div class="col-md-3"><img src="https://www.arpm.co/job/test/img/6.png"></img></div>
+    </div>
+    <div class="row justify-content-center" style="padding-top:40px!important;">
+      <div class="col-md-3"><img src="https://www.arpm.co/job/test/img/6.png"></div>
+      <div class="col-md-3"><img src="https://www.arpm.co/job/test/img/6.png"></div>
+    </div>
+    <div class="row justify-content-center col" style="padding-top:40px!important;">
+      <div class="col-md-3"><img src="https://www.arpm.co/job/test/img/6.png"></div>
+      <div class="col-md-3"><img src="https://www.arpm.co/job/test/img/6.png"></div>
+      <div class="col-md-3"><img src="https://www.arpm.co/job/test/img/6.png"></div>
+    </div>
+    <div class="row justify-content-center" style="padding-top:40px!important;">
+      <div class="col-md-3"><img src="https://www.arpm.co/job/test/img/6.png"></div>
+      <div class="col-md-3"><img src="https://www.arpm.co/job/test/img/6.png"></div>
+      <div class="col-md-3"><img src="https://www.arpm.co/job/test/img/6.png"></div>
+      <div class="col-md-3"><img src="https://www.arpm.co/job/test/img/6.png"></div>
+    </div>
+    
+    
+  </div>
+
+  
+<!-- 
+  Bootstrap docs: https://getbootstrap.com/docs
+	
+	Test: 
+	create a grid with bootstrap structure and classes (col,row...) , using this image 
+	https://www.arpm.co/job/test/img/6.png
+	in order that the final result is a pyramid similar to this:
+	https://www.arpm.co/job/test/img/grid.png
+	
+	No javascript, only html.
+	
+-->	
+</div>
+
+
+
+
+
+
+
+
+
+TASK 4
+
+<?php
+
+class BlogPost {
+  public $id;
+  public $title;
+  public $author_id;
+  public $status;
+
+  public function save(){
+      //save to the list
+  }
+
+  public function all(){
+    //return list
+  }
+}
+
+class PostManager {
+  public function isPostExist($title, $author_id) {
+    $existingPosts = BlogPost::all();
+    foreach($existingPosts as $existingPost){
+      if($existing_post->author->id == $author_id && $existing_post->title==$title){
+        return true;
+      }
+      return false;
+    }
+  }
+
+  public function createPost($title, $authorId, $status, $categoryId) {
+      $post = new BlogPost();
+      $post->title = $title;
+      $post->author_id = $authorId;
+      $post->status = $status;
+      $post->save();
+      $this->savePostOnDB($post, $categoryId);
+  }
+
+  private function savePostOnDB($post, $categoryId) {
+    DB::table('post_categories')->insert([
+      "post_id" => $post->id, 
+      "category_id" => $categoryId
+    ]);
+  }
+
+  public function do() {
+      $title = $_GET["title"];
+      $categoryId = $_GET["category_id"];
+      $authorId = $_GET["author_id"];
+      $status = $_GET["status"];
+
+      if (!$this->isPostExist($title, $authorId)) {
+          $this->createPost($title, $authorId, $status, $categoryId);
+      }
+  }
+}
+
+$manager = new PostManager();
+$manager->do();
+
+?>
+
+
+
